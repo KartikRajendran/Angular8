@@ -7,8 +7,16 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
     <p>
       You Selected Department With Id {{departmentId}}
     </p>
-    <a (click)="goPrevious()">Previous</a>
-    <a (click)="goNext()">Next</a>
+    <div>
+      <button (click)="showOverview()">Overview</button>
+      <button (click)="showContact()">Contacts</button>
+    </div>
+    <router-outlet></router-outlet>
+    <div>
+      <button (click)="goPrevious()">Previous</button>
+      <button (click)="goNext()">Next</button>
+      <button (click)="gotoDepartments()" >Back</button>
+    </div>
   `,
   styles: []
 })
@@ -33,12 +41,28 @@ export class DepartmentDetailComponent implements OnInit {
 
   goNext() {
     const Id = this.departmentId + 1;
-    this.router.navigate(['/departments', Id]);
+    // this.router.navigate(['/departments', Id]);
+    this.router.navigate(['../', Id], {relativeTo: this.route});
   }
 
   goPrevious() {
     const Id = this.departmentId - 1;
-    this.router.navigate(['/departments', Id]);
+    // this.router.navigate(['/departments', Id]);
+    this.router.navigate(['../', Id], {relativeTo: this.route});
+  }
+
+  gotoDepartments() {
+    const Id = this.departmentId;
+    // this.router.navigate(['/departments', {id: Id}]);
+    this.router.navigate(['../', {id: Id}] , {relativeTo: this.route});
+  }
+
+  showOverview() {
+    this.router.navigate(['overview'] , {relativeTo: this.route});
+  }
+
+  showContact() {
+    this.router.navigate(['contact'] , {relativeTo: this.route});
   }
 
 }
